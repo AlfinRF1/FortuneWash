@@ -247,7 +247,6 @@ private void processRfidLogin(String rfidNumber) {
         getContentPane().add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 580, 370, 50));
 
         btnshow.setBackground(new java.awt.Color (0, 0, 0, 0));
-        btnshow.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\icons8-show-password-30.png")); // NOI18N
         btnshow.setBorder(null);
         btnshow.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -262,7 +261,6 @@ private void processRfidLogin(String rfidNumber) {
         getContentPane().add(btnshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(1590, 580, 50, 50));
 
         btnhide.setBackground(new java.awt.Color (0, 0, 0, 0));
-        btnhide.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\icons8-hide-password-30.png")); // NOI18N
         btnhide.setBorder(null);
         btnhide.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -296,7 +294,7 @@ private void processRfidLogin(String rfidNumber) {
         });
         getContentPane().add(tg_rfid, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 660, 100, 30));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\Kelompok 3\\Super Fix\\1920x1080\\login fix (1).png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/login fix (1).png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
