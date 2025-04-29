@@ -32,7 +32,7 @@ public class Dashboard_Owner extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1920, 1080));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\Kelompok 3\\Super Fix\\1920x1080\\Dashboard Owner.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/laporan dashboard owner.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
