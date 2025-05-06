@@ -250,7 +250,7 @@ public class Barcode_motor extends javax.swing.JFrame {
         
         try {
             Connection conn = koneksi.koneksiDB();
-            String sql = "SELECT * FROM transaksi_jual";
+            String sql = "SELECT * FROM transaksi_jual WHERE jenis_kendaraan = 'MOTOR'";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             
