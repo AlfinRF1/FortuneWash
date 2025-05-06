@@ -3,7 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Barang_karyawan;
-
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import koneksi.koneksi;
+import halamanutama1.Dashboard_Karyawan;
+import login.Login_New;
+import Member_Karyawan.Member_Karyawan;
+import trjual_karyawan.tr_jual_karyawan;
 /**
  *
  * @author LENOVO
@@ -15,7 +25,8 @@ public class Barang_Karyawan_New extends javax.swing.JFrame {
      */
     public Barang_Karyawan_New() {
         initComponents();
-        this.setExtendedState(Barang_Karyawan_New.MAXIMIZED_BOTH); 
+        this.setExtendedState(Barang_Karyawan_New.MAXIMIZED_BOTH);
+         loadData();
     }
 
     /**
@@ -27,37 +38,128 @@ public class Barang_Karyawan_New extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabel_barang = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        btn_dashboard = new javax.swing.JButton();
+        btntrjual = new javax.swing.JButton();
+        btnmember = new javax.swing.JButton();
+        btnlogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1920, 1080));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("jButton1");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 170, 110));
+        tabel_barang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 204, 255)));
+        tabel_barang.setFont(new java.awt.Font("Rockwell", 1, 14)); // NOI18N
+        tabel_barang.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Id_Barang", "Nama_Barang", "Jumlah_Barang", "Harga_Barang", "Total_Harga", "No_KTP"
+            }
+        ));
+        jScrollPane2.setViewportView(tabel_barang);
 
-        jButton3.setText("jButton3");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 170, 100));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 350, 1450, 410));
 
-        jButton4.setText("jButton4");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 170, 90));
-
-        jButton5.setText("jButton5");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1760, 40, 70, 60));
-
-        jButton6.setText("jButton6");
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1580, 30, 140, 80));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\Kelompok 3\\Super Fix\\1920x1080\\barang karyawan.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/barang karyawan.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2120, 1080));
+
+        btn_dashboard.setText("jButton1");
+        btn_dashboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_dashboardActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 170, 110));
+
+        btntrjual.setText("jButton3");
+        btntrjual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntrjualActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btntrjual, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 170, 100));
+
+        btnmember.setText("jButton4");
+        btnmember.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmemberActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnmember, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 520, 170, 90));
+
+        btnlogout.setText("jButton5");
+        btnlogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlogoutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1750, 30, 120, 80));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+   private void loadData() {
+        DefaultTableModel model = (DefaultTableModel) tabel_barang.getModel();
+        model.setRowCount(0);
+        try {
+            Connection conn = koneksi.koneksiDB();
+            String sql = "SELECT * FROM barang";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            while (rs.next()) {
+                String idBarang = rs.getString("Id_Barang");
+                String namaBarang = rs.getString("Nama_Barang");
+                int jumlahBarang = rs.getInt("Jumlah_Barang");
+                double hargaBarang = rs.getDouble("Harga_Barang");
+                double totalHarga = rs.getDouble("Total_Harga");
+                String noKtp = rs.getString("No_Ktp");
+                
+                model.addRow(new Object[]{idBarang, namaBarang, jumlahBarang, hargaBarang, totalHarga, noKtp});
+            }
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+    }
+    private void btnlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlogoutActionPerformed
+       int pilihan = JOptionPane.showConfirmDialog(this, 
+            "Apakah anda yakin ingin logout?",
+            "Konfirmasi Logout",
+            JOptionPane.YES_NO_OPTION);
+            
+    if (pilihan == JOptionPane.YES_OPTION) {
+        this.dispose();
+        
+        Login_New loginFrame = new Login_New();
+        loginFrame.setVisible(true);
+    }
+    }//GEN-LAST:event_btnlogoutActionPerformed
+
+    private void btn_dashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dashboardActionPerformed
+         Dashboard_Karyawan dk = new Dashboard_Karyawan();
+        dk.setVisible(true);
+    }//GEN-LAST:event_btn_dashboardActionPerformed
+
+    private void btntrjualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntrjualActionPerformed
+       tr_jual_karyawan trk = new tr_jual_karyawan();
+        trk.setVisible(true);
+    }//GEN-LAST:event_btntrjualActionPerformed
+
+    private void btnmemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmemberActionPerformed
+       Member_Karyawan mk = new Member_Karyawan();
+        mk.setVisible(true);
+    }//GEN-LAST:event_btnmemberActionPerformed
 
     /**
      * @param args the command line arguments
@@ -95,11 +197,12 @@ public class Barang_Karyawan_New extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btn_dashboard;
+    private javax.swing.JButton btnlogout;
+    private javax.swing.JButton btnmember;
+    private javax.swing.JButton btntrjual;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tabel_barang;
     // End of variables declaration//GEN-END:variables
 }

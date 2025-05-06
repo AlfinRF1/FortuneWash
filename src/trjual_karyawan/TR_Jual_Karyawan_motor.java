@@ -10,14 +10,14 @@ import Barang_karyawan.Barang_Karyawan_New;
  *
  * @author LENOVO
  */
-public class TR_Jual_Karyawan extends javax.swing.JFrame {
+public class TR_Jual_Karyawan_motor extends javax.swing.JFrame {
 
     /**
      * Creates new form TR_Jual_Karyawan
      */
-    public TR_Jual_Karyawan() {
+    public TR_Jual_Karyawan_motor() {
         initComponents();
-        this.setExtendedState(TR_Jual_Karyawan.MAXIMIZED_BOTH); 
+        this.setExtendedState(TR_Jual_Karyawan_motor.MAXIMIZED_BOTH); 
     }
 
     /**
@@ -34,7 +34,7 @@ public class TR_Jual_Karyawan extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1920, 1080));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\Kelompok 3\\Super Fix\\1920x1080\\transaksi jual karyawan.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/kendaraan karyawan.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,20 +71,21 @@ public class TR_Jual_Karyawan extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TR_Jual_Karyawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_motor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TR_Jual_Karyawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_motor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TR_Jual_Karyawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_motor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TR_Jual_Karyawan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_motor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TR_Jual_Karyawan().setVisible(true);
+                new TR_Jual_Karyawan_motor().setVisible(true);
             }
         });
     }

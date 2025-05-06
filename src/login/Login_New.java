@@ -23,6 +23,7 @@ public class Login_New extends javax.swing.JFrame {
 
     public Login_New() {
         initComponents();
+         this.setExtendedState(Login_New.MAXIMIZED_BOTH);
         setupRfidListener();
         setupRfidResetTimer();
         tg_rfid.setText("Aktifkan RFID");

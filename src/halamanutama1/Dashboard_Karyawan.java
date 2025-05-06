@@ -5,6 +5,10 @@
 package halamanutama1;
 
 import Barang_karyawan.Barang_Karyawan_New;
+import Member_Karyawan.Member_Karyawan;
+import javax.swing.JOptionPane;
+import login.Login_New;
+import trjual_karyawan.tr_jual_karyawan;
 
 /**
  *
@@ -30,29 +34,81 @@ public class Dashboard_Karyawan extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        btnbarang = new javax.swing.JButton();
+        btnrrjual = new javax.swing.JButton();
+        btnmember = new javax.swing.JButton();
+        btnlogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1920, 1080));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\Kelompok 3\\Super Fix\\1920x1080\\dashboard karyawan.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dashboard karyawan.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1920, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        btnbarang.setText("jButton1");
+        btnbarang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbarangActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnbarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 160, 90));
+
+        btnrrjual.setText("jButton2");
+        btnrrjual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnrrjualActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnrrjual, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 170, 90));
+
+        btnmember.setText("jButton3");
+        btnmember.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmemberActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnmember, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 530, 160, 80));
+
+        btnlogout.setText("jButton4");
+        btnlogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlogoutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(1780, 20, 110, 90));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnbarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbarangActionPerformed
+        Barang_Karyawan_New bk = new Barang_Karyawan_New();
+        bk.setVisible(true);
+    }//GEN-LAST:event_btnbarangActionPerformed
+
+    private void btnrrjualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrrjualActionPerformed
+       tr_jual_karyawan trk = new tr_jual_karyawan();
+        trk.setVisible(true);
+    }//GEN-LAST:event_btnrrjualActionPerformed
+
+    private void btnmemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmemberActionPerformed
+         Member_Karyawan mk = new Member_Karyawan();
+        mk.setVisible(true);
+    }//GEN-LAST:event_btnmemberActionPerformed
+
+    private void btnlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlogoutActionPerformed
+        int pilihan = JOptionPane.showConfirmDialog(this, 
+            "Apakah anda yakin ingin logout?",
+            "Konfirmasi Logout",
+            JOptionPane.YES_NO_OPTION);
+            
+    if (pilihan == JOptionPane.YES_OPTION) {
+        this.dispose();
+        
+        Login_New loginFrame = new Login_New();
+        loginFrame.setVisible(true);
+    }
+    }//GEN-LAST:event_btnlogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -90,6 +146,10 @@ public class Dashboard_Karyawan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnbarang;
+    private javax.swing.JButton btnlogout;
+    private javax.swing.JButton btnmember;
+    private javax.swing.JButton btnrrjual;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

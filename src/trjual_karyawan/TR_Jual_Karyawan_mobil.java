@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Kendaraan_Owner;
+package trjual_karyawan;
 
 import Barang_karyawan.Barang_Karyawan_New;
 
@@ -10,14 +10,14 @@ import Barang_karyawan.Barang_Karyawan_New;
  *
  * @author LENOVO
  */
-public class Kendaraan_Owner extends javax.swing.JFrame {
+public class TR_Jual_Karyawan_mobil extends javax.swing.JFrame {
 
     /**
-     * Creates new form Kendaraan_Owner
+     * Creates new form TR_Jual_Karyawan
      */
-    public Kendaraan_Owner() {
+    public TR_Jual_Karyawan_mobil() {
         initComponents();
-        this.setExtendedState(Kendaraan_Owner.MAXIMIZED_BOTH); 
+        this.setExtendedState(TR_Jual_Karyawan_mobil.MAXIMIZED_BOTH); 
     }
 
     /**
@@ -34,7 +34,7 @@ public class Kendaraan_Owner extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1920, 1080));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\Kelompok 3\\Super Fix\\1920x1080\\kendaraan.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/kendaraan karyawan.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,20 +71,21 @@ public class Kendaraan_Owner extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Kendaraan_Owner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Kendaraan_Owner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Kendaraan_Owner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Kendaraan_Owner.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Kendaraan_Owner().setVisible(true);
+                new TR_Jual_Karyawan_mobil().setVisible(true);
             }
         });
     }

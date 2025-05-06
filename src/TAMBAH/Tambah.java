@@ -5,7 +5,16 @@
 package TAMBAH;
 
 import Barang_karyawan.Barang_Karyawan_New;
-
+import javax.swing.table.DefaultTableModel;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import transaksibeli.TR_Beli_Owner;
 /**
  *
  * @author LENOVO
@@ -18,6 +27,9 @@ public class Tambah extends javax.swing.JFrame {
     public Tambah() {
         initComponents();
         this.setExtendedState(Tambah.MAXIMIZED_BOTH); 
+        loadTransaksiBeli();
+         loadComboBoxData();
+   
     }
 
     /**
@@ -29,30 +41,362 @@ public class Tambah extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabell_trbeli = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        btn_kembali = new javax.swing.JButton();
+        label = new javax.swing.JLabel();
+        btn_hitung = new javax.swing.JButton();
+        btn_create = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(1920, 1080));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("A:\\Tugas\\Kelompok 3\\Super Fix\\1920x1080\\transaksi beli owner (Add Supplier).png")); // NOI18N
+        tabell_trbeli.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "kode pembelian", "tanggal pembelian", "jumlah pembalian", "harga barang", "total harga", "no ktp supplier", "id barang"
+            }
+        ));
+        tabell_trbeli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabell_trbeliMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabell_trbeli);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1920, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1080, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 350, 770, 490));
+
+        jTextField1.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 320, 220, 30));
+        getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 380, 220, 30));
+
+        jTextField2.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 430, 220, 30));
+
+        jTextField3.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 490, 220, 30));
+
+        jTextField4.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 640, 230, 30));
+
+        jComboBox1.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 690, 230, 30));
+
+        jComboBox2.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 750, 230, 30));
+
+        btn_kembali.setText("jButton3");
+        btn_kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(1690, 20, 150, 100));
+
+        label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/transaksi beli owner (Add Supplier).png"))); // NOI18N
+        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 1080));
+
+        btn_hitung.setText("jButton1");
+        btn_hitung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hitungActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_hitung, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, 240, 60));
+
+        btn_create.setText("jButton2");
+        btn_create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_createActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_create, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 800, 220, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public Connection getConnection() {
+    Connection conn = null;
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        String url = "jdbc:mysql://localhost:3306/umkm?useSSL=false&serverTimezone=UTC";
+        String user = "root"; // ganti sesuai user MySQL kamu
+        String pass = "";     // ganti jika MySQL kamu pakai password
+        conn = DriverManager.getConnection(url, user, pass);
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Gagal terkoneksi ke database: " + e.getMessage());
+    }
+    return conn;
+}
+
+    private void clearForm() {
+        jTextField1.setText("");
+        jDateChooser1.setDate(null);
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jComboBox1.setSelectedIndex(0);
+        jComboBox2.setSelectedIndex(0);
+    }
+
+    // Helper method to load data into the table
+    private void loadTableData() {
+        // Use the existing loadTransaksiBeli method
+        loadTransaksiBeli();
+    }
+
+    // Add these methods to initialize combo boxes with data from database
+    private void loadComboBoxData() {
+        try {
+            Connection conn = getConnection();
+            
+            // Load supplier data for jComboBox1
+            PreparedStatement pstmt1 = conn.prepareStatement("SELECT No_Ktp FROM supplier");
+            ResultSet rs1 = pstmt1.executeQuery();
+            
+            jComboBox1.removeAllItems();
+            while (rs1.next()) {
+                jComboBox1.addItem(rs1.getString("No_Ktp"));
+            }
+            
+            // Load product/item data for jComboBox2
+            PreparedStatement pstmt2 = conn.prepareStatement("SELECT Id_Barang FROM barang");
+            ResultSet rs2 = pstmt2.executeQuery();
+            
+            jComboBox2.removeAllItems();
+            while (rs2.next()) {
+                jComboBox2.addItem(rs2.getString("Id_Barang"));
+            }
+            
+            // Close resources
+            rs1.close();
+            rs2.close();
+            pstmt1.close();
+            pstmt2.close();
+            conn.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error loading combo box data: " + e.getMessage(), 
+                "Database Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    // Method to load transaction data into the table
+    private void loadTransaksiBeli() {
+        try {
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(
+                "SELECT t.kode_pembelian, t.tanggal_pembelian, t.Jumlah_pembelian, " +
+                "t.Harga_Barang, t.total_harga, t.No_Ktp_supplier, t.Id_Barang, b.Nama_Barang " +
+                "FROM transaksi_beli t " +
+                "JOIN barang b ON t.Id_Barang = b.Id_Barang"
+            );
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            // Create table model with correct column names
+            DefaultTableModel model = new DefaultTableModel(
+                new Object[][]{}, 
+                new String[]{"kode pembelian", "tanggal pembelian", "jumlah pembelian", 
+                           "harga barang", "total harga", "no ktp supplier", "id barang"}
+            );
+            
+            // Fill the model with data
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("kode_pembelian"),
+                    rs.getDate("tanggal_pembelian"),
+                    rs.getInt("Jumlah_pembelian"),
+                    rs.getDouble("Harga_Barang"),
+                    rs.getDouble("total_harga"),
+                    rs.getString("No_Ktp_supplier"),
+                    rs.getString("Id_Barang")
+                });
+            }
+            
+            // Set the model to the table
+            tabell_trbeli.setModel(model);
+            
+            // Close resources
+            rs.close();
+            stmt.close();
+            conn.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error loading table data: " + e.getMessage(), 
+                "Database Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void setComboBoxSelectedItem(javax.swing.JComboBox<String> comboBox, String value) {
+        for (int i = 0; i < comboBox.getItemCount(); i++) {
+            if (comboBox.getItemAt(i).equals(value)) {
+                comboBox.setSelectedIndex(i);
+                return;
+            }
+        }
+        // If the value is not found, we can add it and select it
+        comboBox.addItem(value);
+        comboBox.setSelectedItem(value);
+    }
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void btn_createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_createActionPerformed
+                                        
+    try {
+        String kodePembelian = jTextField1.getText().trim();
+        Date tanggal = jDateChooser1.getDate();
+        String jumlahText = jTextField2.getText().trim();
+        String hargaText = jTextField3.getText().trim().replace(",", ".");
+        String totalText = jTextField4.getText().trim().replace(",", ".");
+        String noKtp = jComboBox1.getSelectedItem().toString();
+        String idBarang = jComboBox2.getSelectedItem().toString();
+
+        // Validasi input
+        if (kodePembelian.isEmpty() || tanggal == null || jumlahText.isEmpty() || hargaText.isEmpty() || totalText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Semua kolom wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int jumlah = Integer.parseInt(jumlahText);
+        double harga = Double.parseDouble(hargaText);
+        double total = Double.parseDouble(totalText);
+
+        // Format tanggal
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String tanggalStr = sdf.format(tanggal);
+
+        Connection conn = getConnection();
+        String sql = "INSERT INTO transaksi_beli (kode_pembelian, tanggal_pembelian, Jumlah_pembelian, Harga_Barang, total_harga, No_Ktp_supplier, Id_Barang) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, kodePembelian);
+        pst.setString(2, tanggalStr);
+        pst.setInt(3, jumlah);
+        pst.setDouble(4, harga);
+        pst.setDouble(5, total);
+        pst.setString(6, noKtp);
+        pst.setString(7, idBarang);
+
+        pst.executeUpdate();
+        JOptionPane.showMessageDialog(this, "Transaksi berhasil disimpan!");
+        clearForm(); // Reset input
+        loadTableData(); // Refresh tabel
+        pst.close();
+        conn.close();
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Jumlah, harga, dan total harus berupa angka!", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+
+
+
+
+
+
+    }//GEN-LAST:event_btn_createActionPerformed
+
+    private void btn_kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliActionPerformed
+          TR_Beli_Owner tb = new TR_Beli_Owner();
+        tb.setVisible(true);
+    }//GEN-LAST:event_btn_kembaliActionPerformed
+
+    private void btn_hitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hitungActionPerformed
+    
+    try {
+        String jumlahText = jTextField2.getText().trim().replace(",", ".");
+        String hargaText = jTextField3.getText().trim().replace(",", ".");
+
+        if (!jumlahText.isEmpty() && !hargaText.isEmpty()) {
+            int jumlah = Integer.parseInt(jumlahText);
+            double harga = Double.parseDouble(hargaText);
+            double total = jumlah * harga;
+
+            jTextField4.setText(String.format("%.2f", total));
+        } else {
+            jTextField4.setText("");
+        }
+    } catch (NumberFormatException e) {
+        jTextField4.setText("Error");
+    }
+
+
+                                    
+    }//GEN-LAST:event_btn_hitungActionPerformed
+
+    private void tabell_trbeliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabell_trbeliMouseClicked
+
+  try {
+        // Get the selected row index
+        int row = tabell_trbeli.getSelectedRow();
+        if (row >= 0) {
+            // Get data directly from the table
+            String kodePembelian = tabell_trbeli.getValueAt(row, 0).toString();
+            java.util.Date tanggalPembelian = (java.util.Date) tabell_trbeli.getValueAt(row, 1);
+            String jumlahBarang = tabell_trbeli.getValueAt(row, 2).toString();
+            
+            // Format the price values to ensure consistent display format
+            double hargaBarangValue = Double.parseDouble(tabell_trbeli.getValueAt(row, 3).toString());
+            double totalHargaValue = Double.parseDouble(tabell_trbeli.getValueAt(row, 4).toString());
+            
+            java.text.NumberFormat formatter = java.text.NumberFormat.getInstance(new java.util.Locale("id", "ID"));
+            formatter.setMinimumFractionDigits(2);
+            formatter.setMaximumFractionDigits(2);
+            formatter.setGroupingUsed(false); // Disable thousand separators
+            
+            String hargaBarang = formatter.format(hargaBarangValue);
+            String totalHarga = formatter.format(totalHargaValue);
+            
+            String noKtp = tabell_trbeli.getValueAt(row, 5).toString();
+            String idBarang = tabell_trbeli.getValueAt(row, 6).toString();
+            
+            // Set values to form components
+            jTextField1.setText(kodePembelian);
+            jDateChooser1.setDate(tanggalPembelian);
+            jTextField2.setText(jumlahBarang);
+            jTextField3.setText(hargaBarang);
+            jTextField4.setText(totalHarga);
+
+            setComboBoxSelectedItem(jComboBox1, noKtp);
+            setComboBoxSelectedItem(jComboBox2, idBarang);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, 
+            "Error selecting row data: " + e.getMessage(), 
+            "Selection Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+    }//GEN-LAST:event_tabell_trbeliMouseClicked
 
     /**
      * @param args the command line arguments
@@ -90,6 +434,18 @@ public class Tambah extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btn_create;
+    private javax.swing.JButton btn_hitung;
+    private javax.swing.JButton btn_kembali;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel label;
+    private javax.swing.JTable tabell_trbeli;
     // End of variables declaration//GEN-END:variables
 }

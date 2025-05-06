@@ -1,0 +1,510 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package transaksijual;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import koneksi.koneksi;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import koneksi.koneksi;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ *
+ * @author LENOVO
+ */
+public class Barcode_mobil extends javax.swing.JFrame {
+
+    /**
+     * Creates new form barcode
+     */
+    public Barcode_mobil() {
+        initComponents();
+        loadTransaksiJual();
+        loadBarangComboBox();
+        loadMemberComboBox();
+        loadStatusComboBox();
+    }
+ private void loadDataByKode(String kode) {
+        try {
+            Connection conn = koneksi.koneksiDB();
+            String sql = "SELECT * FROM transaksi_jual WHERE kode_penjualan = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, kode);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                kodepenjualan.setText(rs.getString("kode_penjualan"));
+                
+                // Set date
+                Date tanggal = rs.getDate("tanggal_penjualan");
+                if (tanggal != null) {
+                    tanggalpenjualan.setDate(tanggal);
+                }
+                
+                hargajasamobil.setText(String.valueOf(rs.getDouble("harga_jasa")));
+                jenis_kendaraan.setText(rs.getString("jenis_kendaraan"));
+                PLATNOMOR.setText(rs.getString("Plat_Nomor"));
+                
+                // Set combobox selections
+                setSelectedComboBoxItem(STATUS, rs.getString("status"));
+                setSelectedComboBoxItem(ID_BARANG, rs.getString("Id_Barang"));
+                setSelectedComboBoxItem(ID_MEMBER, rs.getString("id_member"));
+            }
+            
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error loading data: " + e.getMessage(), 
+                "Database Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    // Helper method to set selected item in combobox
+    private void setSelectedComboBoxItem(javax.swing.JComboBox<String> comboBox, String value) {
+        if (value != null) {
+            for (int i = 0; i < comboBox.getItemCount(); i++) {
+                if (comboBox.getItemAt(i).equals(value)) {
+                    comboBox.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+    }
+    
+    // Load items for ID_BARANG combobox
+    private void loadBarangComboBox() {
+        ID_BARANG.removeAllItems();
+        
+        try {
+            Connection conn = koneksi.koneksiDB();
+            String sql = "SELECT Id_Barang FROM barang";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            while (rs.next()) {
+                ID_BARANG.addItem(rs.getString("Id_Barang"));
+            }
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error loading barang data: " + e.getMessage(), 
+                "Database Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    // Load items for ID_MEMBER combobox
+    private void loadMemberComboBox() {
+        ID_MEMBER.removeAllItems();
+        
+        try {
+            Connection conn = koneksi.koneksiDB();
+            String sql = "SELECT id_member FROM member";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            // Add empty item for nullable field
+            ID_MEMBER.addItem("");
+            
+            while (rs.next()) {
+                ID_MEMBER.addItem(rs.getString("id_member"));
+            }
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error loading member data: " + e.getMessage(), 
+                "Database Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    // Load items for STATUS combobox
+    private void loadStatusComboBox() {
+        STATUS.removeAllItems();
+        STATUS.addItem("LUNAS");
+        STATUS.addItem("PENDING");
+        STATUS.addItem("GAGAL");
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabel_trjual = new javax.swing.JTable();
+        kodepenjualan = new javax.swing.JTextField();
+        hargajasamobil = new javax.swing.JTextField();
+        PLATNOMOR = new javax.swing.JTextField();
+        jenis_kendaraan = new javax.swing.JTextField();
+        tanggalpenjualan = new com.toedter.calendar.JDateChooser();
+        ID_BARANG = new javax.swing.JComboBox<>();
+        ID_MEMBER = new javax.swing.JComboBox<>();
+        STATUS = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        btn_simpan = new javax.swing.JButton();
+        btn_cetak = new javax.swing.JButton();
+        btn_hapus = new javax.swing.JButton();
+        btn_kembali = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(1728, 972));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tabel_trjual.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "kode penjualan", "tanggal penjualan", "harga jasa", "jenis kendaraan", "status", "plat nomor", "id barang", "id member"
+            }
+        ));
+        tabel_trjual.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_trjualMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tabel_trjual);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 350, 790, 490));
+
+        kodepenjualan.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        getContentPane().add(kodepenjualan, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 302, 270, 30));
+
+        hargajasamobil.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        hargajasamobil.setText("30,000");
+        getContentPane().add(hargajasamobil, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 430, 280, 30));
+        getContentPane().add(PLATNOMOR, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 612, 280, 30));
+
+        jenis_kendaraan.setFont(new java.awt.Font("Rockwell", 1, 12)); // NOI18N
+        jenis_kendaraan.setText("MOBIL");
+        getContentPane().add(jenis_kendaraan, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 490, 280, 30));
+        getContentPane().add(tanggalpenjualan, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 362, 270, 30));
+
+        ID_BARANG.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(ID_BARANG, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 680, 140, 30));
+
+        ID_MEMBER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(ID_MEMBER, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 750, 140, 30));
+
+        STATUS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(STATUS, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 560, 280, 30));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/transaksi jual owner.png"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1850, 1080));
+
+        btn_simpan.setText("jButton1");
+        btn_simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpanActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_simpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 910, 200, 50));
+
+        btn_cetak.setText("jButton2");
+        btn_cetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cetakActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_cetak, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 910, 210, 50));
+
+        btn_hapus.setText("jButton3");
+        btn_hapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hapusActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_hapus, new org.netbeans.lib.awtextra.AbsoluteConstraints(1420, 910, 210, 60));
+
+        btn_kembali.setText("jButton1");
+        btn_kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_kembali, new org.netbeans.lib.awtextra.AbsoluteConstraints(1690, 30, 150, 90));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+private void loadTransaksiJual() {
+        DefaultTableModel model = (DefaultTableModel) tabel_trjual.getModel();
+        model.setRowCount(0);
+        
+        try {
+            Connection conn = koneksi.koneksiDB();
+            String sql = "SELECT * FROM transaksi_jual";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            
+           while (rs.next()) {
+                Object[] row = {
+                    rs.getString("kode_penjualan"),
+                    rs.getDate("tanggal_penjualan"),
+                    rs.getDouble("harga_jasa"),
+                    rs.getString("jenis_kendaraan"),
+                    rs.getString("status"),
+                    rs.getString("Plat_Nomor"),
+                    rs.getString("Id_Barang"),
+                    rs.getString("id_member")
+                };
+                model.addRow(row);
+            model.addRow(row);
+            }
+            
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            JOptionPane.showMessageDialog(this, 
+                "Error loading data: " + e.getMessage(), 
+                "Database Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
+         String kode = kodepenjualan.getText();
+        java.util.Date tanggal = tanggalpenjualan.getDate();
+        String hargaText = hargajasamobil.getText().replace(",", "");
+        double harga = 0;
+        
+        try {
+            harga = Double.parseDouble(hargaText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Harga jasa harus berupa angka!");
+            return;
+        }
+        
+        String jenisKendaraan = jenis_kendaraan.getText();
+        String status = STATUS.getSelectedItem().toString();
+        String platNomor = PLATNOMOR.getText();
+        String idBarang = ID_BARANG.getSelectedItem().toString();
+        String idMember = ID_MEMBER.getSelectedItem() == null || ID_MEMBER.getSelectedItem().toString().isEmpty() ? 
+                          null : ID_MEMBER.getSelectedItem().toString();
+        
+        // Validasi input
+        if (kode.isEmpty() || tanggal == null || platNomor.isEmpty() || idBarang.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Harap isi semua field yang diperlukan!");
+            return;
+        }
+        
+        try {
+            Connection conn = koneksi.koneksiDB();
+            String sql;
+            PreparedStatement pstmt;
+            
+            // Check if record already exists
+            String checkSql = "SELECT COUNT(*) FROM transaksi_jual WHERE kode_penjualan = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, kode);
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+            
+            if (count > 0) {
+                // Update existing record
+                sql = "UPDATE transaksi_jual SET tanggal_penjualan = ?, harga_jasa = ?, jenis_kendaraan = ?, " +
+                      "status = ?, Plat_Nomor = ?, Id_Barang = ?, id_member = ? WHERE kode_penjualan = ?";
+                
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setDate(1, new java.sql.Date(tanggal.getTime()));
+                pstmt.setDouble(2, harga);
+                pstmt.setString(3, jenisKendaraan);
+                pstmt.setString(4, status);
+                pstmt.setString(5, platNomor);
+                pstmt.setString(6, idBarang);
+                
+                if (idMember == null) {
+                    pstmt.setNull(7, java.sql.Types.VARCHAR);
+                } else {
+                    pstmt.setString(7, idMember);
+                }
+                
+                pstmt.setString(8, kode);
+                
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Data berhasil diupdate!");
+            } else {
+                // Insert new record
+                sql = "INSERT INTO transaksi_jual (kode_penjualan, tanggal_penjualan, harga_jasa, " +
+                      "jenis_kendaraan, status, Plat_Nomor, Id_Barang, id_member) " +
+                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, kode);
+                pstmt.setDate(2, new java.sql.Date(tanggal.getTime()));
+                pstmt.setDouble(3, harga);
+                pstmt.setString(4, jenisKendaraan);
+                pstmt.setString(5, status);
+                pstmt.setString(6, platNomor);
+                pstmt.setString(7, idBarang);
+                
+                if (idMember == null) {
+                    pstmt.setNull(8, java.sql.Types.VARCHAR);
+                } else {
+                    pstmt.setString(8, idMember);
+                }
+                
+                pstmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
+            }
+            
+            pstmt.close();
+            conn.close();
+
+            loadTransaksiJual();
+          
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error menyimpan data: " + e.getMessage(), 
+                "Database Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_simpanActionPerformed
+
+    private void btn_cetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cetakActionPerformed
+
+    private void btn_hapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hapusActionPerformed
+       String kode = kodepenjualan.getText();
+        if (kode.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Pilih data yang akan dihapus!");
+            return;
+        }
+        
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Apakah Anda yakin ingin menghapus data dengan kode " + kode + "?", 
+            "Konfirmasi Hapus", 
+            JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                Connection conn = koneksi.koneksiDB();
+                String sql = "DELETE FROM transaksi_jual WHERE kode_penjualan = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, kode);
+                
+                int rowsDeleted = pstmt.executeUpdate();
+                if (rowsDeleted > 0) {
+                    JOptionPane.showMessageDialog(this, "Data berhasil dihapus!");
+                    loadTransaksiJual();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Data tidak ditemukan!");
+                }
+                
+                pstmt.close();
+                conn.close();
+                
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error menghapus data: " + e.getMessage(), 
+                    "Database Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btn_hapusActionPerformed
+
+    private void tabel_trjualMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_trjualMouseClicked
+        
+                int row = tabel_trjual.getSelectedRow();
+                if (row >= 0) {
+                    String kode = tabel_trjual.getValueAt(row, 0).toString();
+                    loadDataByKode(kode);
+                }
+            
+    }//GEN-LAST:event_tabel_trjualMouseClicked
+
+    private void btn_kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliActionPerformed
+        TR_Jual_Owner tr = new TR_Jual_Owner();
+        tr.setVisible(true);
+    }//GEN-LAST:event_btn_kembaliActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Barcode_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Barcode_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Barcode_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Barcode_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Barcode_mobil().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ID_BARANG;
+    private javax.swing.JComboBox<String> ID_MEMBER;
+    private javax.swing.JTextField PLATNOMOR;
+    private javax.swing.JComboBox<String> STATUS;
+    private javax.swing.JButton btn_cetak;
+    private javax.swing.JButton btn_hapus;
+    private javax.swing.JButton btn_kembali;
+    private javax.swing.JButton btn_simpan;
+    private javax.swing.JTextField hargajasamobil;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jenis_kendaraan;
+    private javax.swing.JTextField kodepenjualan;
+    private javax.swing.JTable tabel_trjual;
+    private com.toedter.calendar.JDateChooser tanggalpenjualan;
+    // End of variables declaration//GEN-END:variables
+}
