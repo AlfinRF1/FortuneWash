@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package transaksijual;
+package trjual_karyawan;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,12 +27,12 @@ import java.util.Date;
  *
  * @author LENOVO
  */
-public class Barcode_mobil extends javax.swing.JFrame {
+public class TR_Jual_Karyawan_mobil extends javax.swing.JFrame {
 
     /**
      * Creates new form barcode
      */
-    public Barcode_mobil() {
+    public TR_Jual_Karyawan_mobil() {
         initComponents();
         loadTransaksiJual();
         loadBarangComboBox();
@@ -450,7 +450,7 @@ private void loadTransaksiJual() {
     }//GEN-LAST:event_tabel_trjualMouseClicked
 
     private void btn_kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliActionPerformed
-        TR_Jual_Owner tr = new TR_Jual_Owner();
+        TR_Jual_Karyawan tr = new TR_Jual_Karyawan();
         tr.setVisible(true);
     }//GEN-LAST:event_btn_kembaliActionPerformed
 
@@ -471,13 +471,13 @@ private void loadTransaksiJual() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Barcode_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Barcode_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Barcode_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Barcode_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TR_Jual_Karyawan_mobil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -485,7 +485,7 @@ private void loadTransaksiJual() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Barcode_mobil().setVisible(true);
+                new TR_Jual_Karyawan_mobil().setVisible(true);
             }
         });
     }
